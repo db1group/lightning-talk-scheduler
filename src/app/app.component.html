@@ -1,0 +1,5 @@
+<button class="scheduling-button" (click)="hasLTStatusMessage=!hasLTStatusMessage">
+  Schedule
+</button>
+
+<p *ngIf="hasLTStatusMessage" id="lt-status-message">Sua Lightning Talk foi agendada para o dia 01/01/2020 às 15:00</p>
