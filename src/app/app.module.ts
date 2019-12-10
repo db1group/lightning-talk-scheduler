@@ -5,6 +5,8 @@ import { MatButtonModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient } from 'selenium-webdriver/http';
+import { OutlookSchedulerService } from './services/outlook-scheduler.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [HttpClient, OutlookSchedulerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
