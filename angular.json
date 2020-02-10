@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "lightning-talk-scheduler"
+  "defaultProject": "lightning-talk-scheduler",
+  "cli": {
+    "analytics": "2adcde85-f9f8-4536-8e08-4fb47673bc52"
+  }
 }

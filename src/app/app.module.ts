@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient } from 'selenium-webdriver/http';
 import { OutlookSchedulerService } from './services/outlook-scheduler.service';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
