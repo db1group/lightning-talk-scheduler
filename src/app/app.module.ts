@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OutlookSchedulerService } from './services/outlook-scheduler.service';
 import { HttpClient, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { MsalModule, MsalInterceptor } from "@azure/msal-angular"
+import { MsalModule, MsalInterceptor } from "@azure/msal-angular";
+import { SchedulingPanelComponent } from './scheduling-panel/scheduling-panel.component'
 
 export const protectedResourceMap:[string, string[]][]=[ ['https://graph.microsoft.com/v1.0/me/calendar/events', ['https://graph.microsoft.com/Calendars.ReadWrite.Shared', 'https://graph.microsoft.com/Calendars.ReadWrite']] ];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SchedulingPanelComponent
   ],
   imports: [
     BrowserModule,

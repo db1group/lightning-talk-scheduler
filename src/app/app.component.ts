@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BroadcastService, MsalService } from '@azure/msal-angular';
 import { OutlookSchedulerService } from './services/outlook-scheduler.service';
 // import { Subscription } from 'rxjs/Subscription';
+import {LightningTalk} from "./model/lightning-talk";
 
 @Component({
   selector: 'app-root',
@@ -22,9 +23,9 @@ export class AppComponent {
     this.broadcastService.subscribe("msal:loginSuccess", (payload) => {
       console.log("success login", payload);
 
-      this.outlookScheduler
-        .createEventInIvosCalendar()
-        .subscribe(console.log,console.log);
+      // this.outlookScheduler
+      //   .createEventInIvosCalendar()
+      //   .subscribe(console.log,console.log);
     });  
 
     this.broadcastService.subscribe("msal:acquireTokenSuccess", (payload) => {
@@ -34,7 +35,7 @@ export class AppComponent {
     this.broadcastService.subscribe("msal:acquireTokenFailure", (payload) => {
       console.log("acquire token failure", payload)
     });
-    
+
  
   }
 

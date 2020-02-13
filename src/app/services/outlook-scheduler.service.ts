@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LightningTalk } from '../model/lightning-talk';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,30 +16,30 @@ export class OutlookSchedulerService {
 
   }
 
-  createEventInIvosCalendar() {
+  createEventInIvosCalendar(lightningTalk:LightningTalk) {
     var payload = `
     {
-      "subject": "It is just a test from Ivo.",
+      "subject": "${lightningTalk.title}",
       "body": {
         "contentType": "HTML",
-        "content": "PRUEBAS"
+        "content": "<h1>Light</h1>${lightningTalk.description}</br></br>"
       },
       "start": {
-          "dateTime": "2020-02-11T12:00:00",
-          "timeZone": "Pacific Standard Time"
+          "dateTime": "${lightningTalk.start.toISOString()}",
+          "timeZone" : "Pacific Standard Time"
       },
       "end": {
-          "dateTime": "2020-02-11T13:00:00",
-          "timeZone": "Pacific Standard Time"
+          "dateTime": "${lightningTalk.end.toISOString()}",
+          "timeZone" : "Pacific Standard Time"
       },
       "location":{
-          "displayName":"Location test"
+          "displayName":"Espaço Talk / Transmissão"
       },
       "attendees": [
         {
           "emailAddress": {
-            "address":"ivo.batistela@gmail.com",
-            "name": "Ivor"
+            "address":"ivo.batistela@db1.com.br",
+            "name": "John doe"
           },
           "type": "required"
         }
