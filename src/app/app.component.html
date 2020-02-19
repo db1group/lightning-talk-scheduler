@@ -25,44 +25,47 @@
 </mat-grid-list>
 
 
-<form class="lt-form" *ngIf="isLogged()">
+<form [formGroup]="formLt" class="lt-form" *ngIf="isLogged()">
   <mat-form-field class="full-width">
     <mat-label>Título</mat-label>
-    <input matInput placeholder="" value="">
+    <input matInput formControlName="title" placeholder="" value="">
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <mat-label>Descrição</mat-label>
-    <textarea matInput placeholder="Conte as pessoas um pouquinho do que lhes aguarda"></textarea>
+    <textarea matInput formControlName="description" placeholder="Conte as pessoas um pouquinho do que lhes aguarda"></textarea>
   </mat-form-field>
 
   <mat-form-field>
       <mat-label>Data</mat-label>
-      <input matInput [matDatepicker]="dp3" disabled>
+      <input matInput [matDatepicker]="dp3" (keypress)="abrirCalendario(dp3);" formControlName="date" >
       <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
       <mat-datepicker #dp3 disabled="false"></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Início</mat-label>
-    <input matInput placeholder="" type="time"/>
+    <input matInput formControlName="startTime" placeholder="" type="time"/>
   </mat-form-field>
   até
   <mat-form-field>
     <mat-label>Fim</mat-label>
-    <input matInput placeholder="" type="time"/>
+    <input matInput formControlName="endTime" placeholder="" type="time"/>
   </mat-form-field>
 
-  <mat-slide-toggle class="full-width">É uma lightning talk técnica</mat-slide-toggle>
+  <mat-slide-toggle class="full-width" formControlName="technical">É uma lightning talk técnica</mat-slide-toggle>
  
   <mat-form-field class="full-width">
     <mat-label>Necessidades técnicas</mat-label>
-    <textarea matInput placeholder="Precisa de alguma ajuda na hora da transmissão? Ex: Preciso de um computador no local; Minha apresentação terá vídeos"></textarea>
+    <textarea matInput formControlName="tranmissionNeeds" placeholder="Precisa de alguma ajuda na hora da transmissão? Ex: Preciso de um computador no local; Minha apresentação terá vídeos"></textarea>
   </mat-form-field>
 
   <button mat-raised-button color="primary" class="default-button scheduling-button" (click)="scheduleALightningTalk()">
     Enviar
   </button>
+
+  <div *ngIf="status.tranmission" class="full-width">{{status.tranmission}}</div>
+  <div *ngIf="status.calendar" class="full-width"> {{status.calendar}}</div>
 </form>
 
 

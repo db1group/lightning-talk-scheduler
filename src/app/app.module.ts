@@ -19,6 +19,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TransmissionBodyRendererService } from './services/transmission-body-renderer.service';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 export const protectedResourceMap:[string, string[]][]=[ ['https://graph.microsoft.com/v1.0/', ['https://graph.microsoft.com/Calendars.ReadWrite.Shared', 'https://graph.microsoft.com/Calendars.ReadWrite', 'https://graph.microsoft.com/Mail.Send']] ];
 
@@ -51,12 +53,21 @@ export const protectedResourceMap:[string, string[]][]=[ ['https://graph.microso
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    ReactiveFormsModule
   ],
-  providers: [HttpClient, OutlookSchedulerService, LoggedUserInfoService, ScheduleTransmissionService, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: MsalInterceptor,
-    multi: true
-  }],
+  providers: [
+    HttpClient,
+    OutlookSchedulerService,
+    LoggedUserInfoService,
+    ScheduleTransmissionService,
+    TransmissionBodyRendererService,
+    FormBuilder,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

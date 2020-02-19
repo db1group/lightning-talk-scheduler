@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LightningTalk } from '../model/lightning-talk';
 import { LoggedUserData } from '../model/logged-user-data';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -45,7 +46,7 @@ export class OutlookSchedulerService {
         "attendees": [
             {
                 "emailAddress": {
-                    "address":"ivo.batistela@db1.com.br",
+                    "address": environment.emailGroup,
                     "name": "John doe"
                 }
             }

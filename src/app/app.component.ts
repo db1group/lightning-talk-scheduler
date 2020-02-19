@@ -5,6 +5,8 @@ import { LightningTalk } from './model/lightning-talk';
 import { LoggedUserInfoService } from './services/logged-user-info.service';
 import { ScheduleTransmissionService } from './services/schedule-transmission.service';
 import { LoggedUserData } from './model/logged-user-data';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +19,17 @@ export class AppComponent {
     name: '',
     photo: ''
   };
-
-  constructor(private broadcastService: BroadcastService, private authService: MsalService, private outlookScheduler: OutlookSchedulerService, private loggedUserInfo: LoggedUserInfoService, private scheduleTranmissionService: ScheduleTransmissionService){
+  public formLt:FormGroup;
+  public status = {
+    tranmission:null,
+    calendar:null
+  };
+  constructor(private broadcastService: BroadcastService, 
+              private authService: MsalService, 
+              private outlookScheduler: OutlookSchedulerService, 
+              private loggedUserInfo: LoggedUserInfoService, 
+              private scheduleTranmissionService: ScheduleTransmissionService,
+              private formBuilder:FormBuilder){
   
     if (this.isLogged()) {
       this.updateLoggedUserInfo();
@@ -27,28 +38,50 @@ export class AppComponent {
     this.broadcastService.subscribe("msal:loginSuccess", (payload) => {
       this.updateLoggedUserInfo();
     });  
+
+    this.formLt = this.formBuilder.group({
+        title: [],
+        description: [],
+        date: [],
+        startTime: [],
+        endTime: [],
+        tranmissionNeeds: [],
+        technical: [false]
+    })
+  }
+
+  abrirCalendario(item){
+    item.open();
   }
 
   public scheduleALightningTalk() {
-    var startDate = new Date();
-    var endDate = new Date();
-
-    endDate.setHours(startDate.getHours() + 1);
-
+    const formValue = this.formLt.value;
+    const timeStart = formValue.startTime.split(":");
+    const timeEnd = formValue.endTime.split(":");
+    const startDate = new Date(formValue.date);
+    startDate.setHours(timeStart[0],timeStart[1]);
+    const endDate = new Date(formValue.date);
+    endDate.setHours(timeEnd[0],timeEnd[1]);
     var lightningTalk:LightningTalk = {
-        title: 'Teste de título de Lightning Talk !@#$%ˆ&*()',
-        description: 'starting with a small description',
-        start: startDate,
-        end: endDate,
-        tranmissionNeeds: 'Não preciso de nada',
-        technical: true
-    }
+      title: formValue.title,
+      description: formValue.description,
+      start: startDate,
+      end: endDate,
+      tranmissionNeeds: formValue.tranmissionNeeds,
+      technical: formValue.technical
+  }
+    
 
-    this.outlookScheduler.scheduleLightningTalkInPeopleCalendar(this.loggedUserData, lightningTalk)
-      .subscribe(console.log, console.log);
-
+    this.outlookScheduler
+      .scheduleLightningTalkInPeopleCalendar(this.loggedUserData, lightningTalk)
+      .subscribe(suc=> { this.status.calendar="Evento criado no calendário da galera" },
+                 err=> this.status.calendar="Ocorreu um erro ao criar o evento no calendário");
     this.scheduleTranmissionService.scheduleTransmitionSupport(lightningTalk)
-      .subscribe(console.log, console.log);
+      .subscribe(suc=> { this.status.tranmission="Tramissão agendada com sucesso" }, 
+                  err=> this.status.tranmission="Ocorreu um erro ao agendar a tranmissão")
+  
+    this.formLt.reset();  
+      
   }
 
   public logar(){

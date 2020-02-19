@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  emailGroup: "EMAIL_GROUP",
+  emailTransmission: "EMAIL_TRANSMISSION"
 };
