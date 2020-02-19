@@ -1,9 +1,68 @@
-<router-outlet></router-outlet>
+<mat-toolbar class="toolbar">
+  <img src="../assets/logo-comite-tecnico.png" class="toolbar-logo" alt="Logo do Comitê técnico">
+  <span>
+    Agendador de Lightning Talk
+  </span>
+  <span class="toolbar-spacer"></span>
+  <span *ngIf="isLogged()">
+    <button mat-button *ngIf="isLogged()" [matMenuTriggerFor]="menu">{{loggedUserData['name']}}</button>
+    <img src="{{ loggedUserData['photo'] }}" style="width: 30px; height: 30px;"/>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </span>
+</mat-toolbar>
 
-You have to log in, click into the button below
+<mat-grid-list cols="1" rowHeight="100px" *ngIf="!isLogged()">
+  <mat-grid-tile [colspan]="1" [rowspan]="3">
+    <img src="../assets/logo-lightning-talk.png" alt="Logo da Lightning Talk">
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
+    <button  mat-raised-button color="primary" class="default-button scheduling-button" (click)="logar()">
+      Autenticar
+    </button>
+  </mat-grid-tile>
+</mat-grid-list>
 
-<button  mat-raised-button color="primary" class="scheduling-button" (click)="logar()">
-  Schedule
-</button>
 
-<p *ngIf="hasLTStatusMessage" id="lt-status-message">Sua Lightning Talk foi agendada para o dia 01/01/2020 às 15:00</p>
+<form class="lt-form" *ngIf="isLogged()">
+  <mat-form-field class="full-width">
+    <mat-label>Título</mat-label>
+    <input matInput placeholder="" value="">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Descrição</mat-label>
+    <textarea matInput placeholder="Conte as pessoas um pouquinho do que lhes aguarda"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="dp3" disabled>
+      <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+      <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Início</mat-label>
+    <input matInput placeholder="" type="time"/>
+  </mat-form-field>
+  até
+  <mat-form-field>
+    <mat-label>Fim</mat-label>
+    <input matInput placeholder="" type="time"/>
+  </mat-form-field>
+
+  <mat-slide-toggle class="full-width">É uma lightning talk técnica</mat-slide-toggle>
+ 
+  <mat-form-field class="full-width">
+    <mat-label>Necessidades técnicas</mat-label>
+    <textarea matInput placeholder="Precisa de alguma ajuda na hora da transmissão? Ex: Preciso de um computador no local; Minha apresentação terá vídeos"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" class="default-button scheduling-button" (click)="scheduleALightningTalk()">
+    Enviar
+  </button>
+</form>
+
+

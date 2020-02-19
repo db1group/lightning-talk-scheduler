@@ -1,0 +1,32 @@
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.toolbar-logo {
+    height: 64px;
+}
+
+.default-button {
+   background-color: #ffffff;
+   color: #013A40;
+   padding: 5px 20px;
+}
+
+.toolbar {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.lt-form {
+    min-width: 150px;
+    max-width: 800px;
+    width: 100%;
+    background-color: #FFFFFF;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.full-width {
+    width: 100%;
+}

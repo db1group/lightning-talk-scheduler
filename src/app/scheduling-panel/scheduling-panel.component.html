@@ -1,1 +1,22 @@
-<p>scheduling-panel works!</p>
+<form class="lt-form">
+    <mat-form-field class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput placeholder="" value="">
+    </mat-form-field>
+  
+    <mat-form-field class="full-width">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput placeholder="Conte as pessoas um pouquinho do que lhes aguarda"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Data:</mat-label>
+        <input matInput [matDatepicker]="dp3" disabled>
+        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-slide-toggle class="full-width">É uma lightning talk técnica</mat-slide-toggle>
+    <mat-slide-toggle class="full-width">Vou levar meu próprio computador</mat-slide-toggle>
+   
+  </form>

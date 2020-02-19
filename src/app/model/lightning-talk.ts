@@ -3,6 +3,6 @@ export type LightningTalk = {
     end: Date;
     title: String;
     description: String;
+    tranmissionNeeds: String;
     technical: boolean;
-    needComputer: boolean;
 }
