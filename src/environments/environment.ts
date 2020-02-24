@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
-  emailGroup: "ivo.batistela@gmail.com.br",
-  emailTransmission: "ivo.batistela@gmail.com.br"
+  emailGroup: "<<EMAIL_TO_SEND_THE_EVENT>>",
+  emailTransmission: "<<EMAIL_TO_SEND_THE_TRANMISSION_AGENDA>>",
+  redirectUrl: "http://localhost:4200"
 };
