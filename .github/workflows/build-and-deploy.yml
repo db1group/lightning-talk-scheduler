@@ -1,0 +1,27 @@
+name: Build and deploy the LightningTalk Scheduler app
+
+on: push
+
+jobs:
+  build-and-deploy-app:
+    name: Build and deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: Use Node.js 11
+        uses: actions/setup-node@v1
+        with:
+          node-version: "11.x"
+      - name: Install dependencies
+        run: npm install
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v2
+        env:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          EMAIL_GROUP: ${{ secrets.EMAIL_GROUP }}
+          EMAIL_TRANMISSION: ${{ secrets.EMAIL_TRANMISSION }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          FOLDER: dist/lightning-talk-scheduler
+          BUILD_SCRIPT: npm run build --aot --prod

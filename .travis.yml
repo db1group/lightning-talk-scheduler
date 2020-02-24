@@ -1,0 +1,28 @@
+language: node_js
+node_js:
+  - "12"
+dist: trusty
+sudo: required
+
+branches:
+  only:
+  - master
+
+before_script:
+  - sed -ri "s+EMAIL_GROUP+$EMAIL_GROUP+" src/environments/environment.prod.ts
+  - sed -ri "s+EMAIL_TRANSMISSION+$EMAIL_TRANSMISSION+" src/environments/environment.prod.ts
+  - sed -ri "s+REDIRECT_URL+$BASE_REF+" src/environments/environment.prod.ts
+  - npm install -g @angular/cli
+
+script:
+  - pwd
+  - node --version
+  - ng build --aot --prod --base-href $BASE_REF
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/lightning-talk-scheduler
+  on:
+    branch: master
