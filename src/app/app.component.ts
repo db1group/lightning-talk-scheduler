@@ -5,16 +5,18 @@ import { LightningTalk } from './model/lightning-talk';
 import { LoggedUserInfoService } from './services/logged-user-info.service';
 import { ScheduleTransmissionService } from './services/schedule-transmission.service';
 import { LoggedUserData } from './model/logged-user-data';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   
+  private static BR_TIME_VALIDATOR = /^([0-1]?[0-9]|[2][0-3]):([0-5]?[0-9])$/m;
+
   public loggedUserData:LoggedUserData = {
     name: '',
     photo: ''
@@ -40,14 +42,14 @@ export class AppComponent {
     });  
 
     this.formLt = this.formBuilder.group({
-        title: [],
-        description: [],
-        date: [],
-        startTime: [],
-        endTime: [],
-        tranmissionNeeds: [],
+        title: ['', Validators.required],
+        description: ['', Validators.required],
+        date: ['', Validators.required],
+        startTime: ['', [Validators.required, Validators.pattern(AppComponent.BR_TIME_VALIDATOR)]],
+        endTime: ['', [ Validators.required, Validators.pattern(AppComponent.BR_TIME_VALIDATOR)]],
+        tranmissionNeeds: [''],
         technical: [false]
-    })
+    }, { validators: this.endTimeGreatherThanStartTimeValidator() });
   }
 
   abrirCalendario(item){
@@ -81,7 +83,6 @@ export class AppComponent {
                   err=> this.status.tranmission="Ocorreu um erro ao agendar a tranmissão")
   
     this.formLt.reset();  
-      
   }
 
   public logar(){
@@ -107,5 +108,19 @@ export class AppComponent {
     this.loggedUserInfo
         .getLoggedUserInfo()
         .subscribe(userDataFound => this.loggedUserData = userDataFound, alert);
+  }
+
+  private endTimeGreatherThanStartTimeValidator(): ValidatorFn {
+    return (control: FormGroup): ValidationErrors | null => {
+      const startTime = this.getInputTimeAsSeconds(control.get('startTime').value);
+      const endTime = this.getInputTimeAsSeconds(control.get('endTime').value);
+
+      return startTime > endTime ? { 'endTimeGreatherThanStartTime': true } : null;
+    };
+  }
+
+  private getInputTimeAsSeconds(formattedTime:String): Number {
+    const values = formattedTime.split(':');
+    return parseInt(values[0]) * 60 + parseInt(values[1]);
   }
 }

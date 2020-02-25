@@ -45,13 +45,19 @@
 
   <mat-form-field>
     <mat-label>Início</mat-label>
-    <input matInput formControlName="startTime" placeholder="" type="time"/>
+    <input matInput formControlName="startTime" placeholder="" type="text"/>
+    <mat-error>Hora deve estar no padrão HH:mm</mat-error>
   </mat-form-field>
   até
   <mat-form-field>
     <mat-label>Fim</mat-label>
-    <input matInput formControlName="endTime" placeholder="" type="time"/>
+    <input matInput formControlName="endTime" placeholder="" type="text"/>
+    <mat-error>Hora deve estar no padrão HH:mm</mat-error>
   </mat-form-field>
+
+  <div *ngIf="formLt.errors?.endTimeGreatherThanStartTime" class="cross-validation-error-message alert alert-danger">
+    A Lightning Talk deve finalizar depois de sua hora de início
+ </div>
 
   <mat-slide-toggle class="full-width" formControlName="technical">É uma lightning talk técnica</mat-slide-toggle>
  

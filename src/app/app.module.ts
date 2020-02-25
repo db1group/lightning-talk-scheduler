@@ -18,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { TransmissionBodyRendererService } from './services/transmission-body-renderer.service';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
@@ -66,7 +66,8 @@ export const protectedResourceMap:[string, string[]][]=[ ['https://graph.microso
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,
       multi: true
-    }
+    },
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
   ],
   bootstrap: [AppComponent]
 })
