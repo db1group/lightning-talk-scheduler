@@ -66,7 +66,7 @@
     <textarea matInput formControlName="tranmissionNeeds" placeholder="Precisa de alguma ajuda na hora da transmissão? Ex: Preciso de um computador no local; Minha apresentação terá vídeos"></textarea>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" class="default-button scheduling-button" (click)="scheduleALightningTalk()">
+  <button mat-raised-button color="primary" class="default-button scheduling-button" [disabled]="!formLt.valid" (click)="scheduleALightningTalk()">
     Enviar
   </button>
 
