@@ -6,7 +6,6 @@ import { LoggedUserInfoService } from './services/logged-user-info.service';
 import { ScheduleTransmissionService } from './services/schedule-transmission.service';
 import { LoggedUserData } from './model/logged-user-data';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-root',

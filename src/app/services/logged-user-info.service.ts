@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { LoggedUserData } from '../model/logged-user-data';
+import { MsalService } from '@azure/msal-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoggedUserInfoService {
 
-  constructor(private _httpClient:HttpClient) { }
+  constructor(private _httpClient:HttpClient, private authService: MsalService) { }
 
   public getLoggedUserInfo(): Observable<LoggedUserData> {
     var userInfo:LoggedUserData = {
@@ -18,36 +18,24 @@ export class LoggedUserInfoService {
     };
 
     return new Observable(observer => {
-      var loggedUserGeneralInfo = this._httpClient
-        .get("https://graph.microsoft.com/v1.0/me", {})
-        .pipe(tap(retrievedUserInfo => userInfo.name = retrievedUserInfo['displayName']));
-
-      var loggedUserPhoto = this._httpClient
+      userInfo.name = this.authService.getUser().name;
+      
+      this._httpClient
         .get("https://graph.microsoft.com/v1.0/me/photo/$value", { responseType: 'blob' })
-        .pipe(tap(
-          retrievedPhoto => {
+        .subscribe(retrievedPhoto => {
             var reader = new FileReader();
             reader.readAsDataURL(retrievedPhoto); 
             reader.onloadend = function() {
               userInfo.photo = reader.result.toString();
           }
-        }));
-
-      forkJoin([loggedUserGeneralInfo, loggedUserPhoto])
-        .subscribe(val => {
-          observer.next(userInfo);
-          observer.complete();
         }, (err) => {
-          if (!userInfo.name) {
-            userInfo.name = 'Not Found :(';
-          }
-
           if (!userInfo.photo) {
             userInfo.photo = 'assets/wally.png';
           }
+        }).add(() => {
           observer.next(userInfo);
           observer.complete();
         });
-    });
+   });
   }
 }
