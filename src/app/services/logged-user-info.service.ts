@@ -30,7 +30,7 @@ export class LoggedUserInfoService {
           }
         }, (err) => {
           if (!userInfo.photo) {
-            userInfo.photo = 'assets/wally.png';
+            userInfo.photo = './assets/wally.png';
           }
         }).add(() => {
           observer.next(userInfo);
