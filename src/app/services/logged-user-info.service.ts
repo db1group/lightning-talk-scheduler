@@ -37,7 +37,17 @@ export class LoggedUserInfoService {
         .subscribe(val => {
           observer.next(userInfo);
           observer.complete();
-        }, alert);
+        }, (err) => {
+          if (!userInfo.name) {
+            userInfo.name = 'Not Found :(';
+          }
+
+          if (!userInfo.photo) {
+            userInfo.photo = 'assets/wally.png';
+          }
+          observer.next(userInfo);
+          observer.complete();
+        });
     });
   }
 }
