@@ -49,7 +49,7 @@ export class OutlookSchedulerService {
             {
                 "emailAddress": {
                     "address": environment.emailGroup,
-                    "name": "John doe"
+                    "name": "Email group"
                 }
             }
         ]
