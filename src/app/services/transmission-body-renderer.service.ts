@@ -41,10 +41,10 @@ export class TransmissionBodyRendererService {
   }
 
   private getBrlDate(desiredDate:Date): String {
-    return `${desiredDate.getDate()}/${desiredDate.getMonth() + 1}/${desiredDate.getFullYear()}`;
+    return `${('0' + desiredDate.getDate()).slice(-2)}/${('0' + (desiredDate.getMonth() + 1)).slice(-2)}/${desiredDate.getFullYear()}`;
   }
 
   private getBrlTime(desiredDate:Date): String {
-    return `${desiredDate.getHours()}:${desiredDate.getMinutes()}`;
+    return `${('0' + desiredDate.getHours()).slice(-2)}:${('0' + desiredDate.getMinutes()).slice(-2)}`;
   }
 }

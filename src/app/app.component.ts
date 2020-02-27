@@ -70,10 +70,10 @@ export class AppComponent {
       start: startDate,
       end: endDate,
       tranmissionNeeds: formValue.tranmissionNeeds,
-      technical: formValue.technical
+      technical: false
   }
     
-
+  console.log('oi');
     this.outlookScheduler
       .scheduleLightningTalkInPeopleCalendar(this.loggedUserData, lightningTalk)
       .subscribe(suc=> { this.status.calendar="Evento criado no calendário da galera" },
@@ -115,7 +115,7 @@ export class AppComponent {
       const startTime = this.getInputTimeAsSeconds(control.get('startTime').value);
       const endTime = this.getInputTimeAsSeconds(control.get('endTime').value);
 
-      return startTime > endTime ? { 'endTimeGreatherThanStartTime': true } : null;
+      return startTime >= endTime ? { 'endTimeGreatherThanStartTime': true } : null;
     };
   }
 
