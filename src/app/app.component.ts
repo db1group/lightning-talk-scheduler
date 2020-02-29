@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BroadcastService, MsalService } from '@azure/msal-angular';
 import { OutlookSchedulerService } from './services/outlook-scheduler.service';
 import { LightningTalk } from './model/lightning-talk';
@@ -34,21 +34,23 @@ export class AppComponent {
   
     if (this.isLogged()) {
       this.updateLoggedUserInfo();
-    }
-      
-    this.broadcastService.subscribe("msal:loginSuccess", (payload) => {
-      this.updateLoggedUserInfo();
-    });  
 
-    this.formLt = this.formBuilder.group({
-        title: ['', Validators.required],
-        description: ['', Validators.required],
-        date: ['', Validators.required],
-        startTime: ['', [Validators.required, Validators.pattern(AppComponent.BR_TIME_VALIDATOR)]],
-        endTime: ['', [ Validators.required, Validators.pattern(AppComponent.BR_TIME_VALIDATOR)]],
-        tranmissionNeeds: [''],
-        technical: [false]
-    }, { validators: this.endTimeGreatherThanStartTimeValidator() });
+      this.broadcastService.subscribe("msal:loginSuccess", (payload) => {
+        this.updateLoggedUserInfo();
+      });  
+  
+      this.formLt = this.formBuilder.group({
+          title: ['', Validators.required],
+          description: ['', Validators.required],
+          date: ['', Validators.required],
+          startTime: ['', [Validators.required, Validators.pattern(AppComponent.BR_TIME_VALIDATOR)]],
+          endTime: ['', [ Validators.required, Validators.pattern(AppComponent.BR_TIME_VALIDATOR)]],
+          tranmissionNeeds: [''],
+          technical: [false]
+      }, { validators: this.endTimeGreatherThanStartTimeValidator() });
+    } else {
+      this.logar();
+    }
   }
 
   abrirCalendario(item){
