@@ -24,8 +24,10 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-
 <form [formGroup]="formLt" class="lt-form" *ngIf="isLogged()">
+  <h3 style="text-align: center">
+    Lembre-se de colar um Post-it no calendário da cozinha para garantir a reserva (Se você trabalha remotamente, peça para alguém colar para você)
+  </h3>
   <mat-form-field class="full-width">
     <mat-label>Título</mat-label>
     <input matInput formControlName="title" placeholder="" value="">
