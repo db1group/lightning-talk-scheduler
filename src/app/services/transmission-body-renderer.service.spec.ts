@@ -31,7 +31,7 @@ describe('TransmissionBodyRendererService', () => {
       .not.toBeNull();
       /*.toEqual(JSON.parse(`{
         "message": {
-          "subject": "Tranmissão de Lightning Talk",
+          "subject": "Transmissão de Lightning Talk",
           "body": {
             "contentType": "Text",
             "content": "
