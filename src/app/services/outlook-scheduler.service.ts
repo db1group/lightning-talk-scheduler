@@ -84,11 +84,6 @@ export class OutlookSchedulerService {
     </tr>
     <tr>
         <td colspan="2">
-            <p>Por: ${loggedUserData.name}</p>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
             <p>Dia: ${startDateFormatted} ${startTimeFormatted} às ${endTimeFormatted}</p>
         </td>
     </tr>
