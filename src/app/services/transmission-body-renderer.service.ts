@@ -16,7 +16,7 @@ export class TransmissionBodyRendererService {
 
     var mailBody = {
       "message": {
-        "subject": "Tranmissão de Lightning Talk",
+        "subject": "Transmissão de Lightning Talk",
         "body": {
           "contentType": "Text",
           "content": `
